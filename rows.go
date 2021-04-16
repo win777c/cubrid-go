@@ -82,6 +82,8 @@ func (r *cub_rows) Next(dest []driver.Value) error {
 
 		if indicator > 0 {
 			v = C.GoBytes(unsafe.Pointer(value), indicator)
+		} else if indicator == 0 && (r.result.columns[i].col_type == C.CCI_U_TYPE_BLOB || r.result    .columns[i].col_type == C.CCI_U_TYPE_CLOB) {
+			// This condition statement is not handled, because LOB is handled below in the switch statement
 		} else {
 			dest[i] = nil
 			continue
