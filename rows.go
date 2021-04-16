@@ -86,7 +86,9 @@ func (r *cub_rows) Next(dest []driver.Value) error {
 			// This condition statement is not handled, because LOB is handled below in the switch statement
 		} else {
 			dest[i] = nil
-			continue
+else if indicator < 0 || !(r.result.columns[i].col_type == C.CCI_U_TYPE_BLOB || r.result.columns[i].col_type == C.CCI_U_TYPE_CLOB) {
+    dest[i] = nil
+   continue
 		}
 
 		switch r.result.columns[i].col_type {
@@ -143,4 +145,3 @@ func (r *cub_result) LastInsertId() (int64, error) {
 func (r *cub_result) RowsAffected() (int64, error) {
 	return r.affected_rows, nil
 }
-
